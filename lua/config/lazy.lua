@@ -71,7 +71,7 @@ require("lazy").setup({
 	},
 	rocks = { enabled = false }, -- desactivamos luarocks para evitar warnings
 })
--- require("config.ui")
--- require("config.utils")
--- require("config.keymaps")
--- require("config.autocmds")
+require("config.ui")
+require("config.utils")
+require("config.keymaps")
+require("config.autocmds")
