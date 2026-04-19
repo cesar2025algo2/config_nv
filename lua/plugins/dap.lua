@@ -1,4 +1,5 @@
 -- ~/.config/nvim/lua/plugins/dap.lua
+-- Instalar debugers necesarios con `:Mason` (ej: debugpy)
 return {
 	{
 		"mfussenegger/nvim-dap",
