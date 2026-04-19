@@ -2,6 +2,7 @@
 nvim
 ├── Readme.md
 ├── init.lua
+├── lazy-lock.json
 └── lua
     ├── config
     │   ├── autocmds.lua
@@ -11,7 +12,10 @@ nvim
     │   ├── ui.lua
     │   └── utils.lua
     └── plugins
+        ├── blink-cmp.lua
         ├── conform.lua
+        ├── copilot-chat.lua
+        ├── copilot.lua
         ├── dap.lua
         ├── dressing.lua
         ├── fzf-lua.lua
@@ -24,6 +28,8 @@ nvim
         ├── statusline.lua
         ├── tokyonight.lua
         └── which-key.lua
+
+4 directories, 25 files
 ```
 
 - [X] lazy.lua
@@ -46,9 +52,9 @@ nvim
 - [x] lsp.lua
 - [X] conform.lua
 - [X] dap.lua
-- [ ] 
-- [ ] 
-- [ ] 
+- [X] blink-cmp.lua 
+- [X] copilot.lua
+- [X] copilot-chat.lua
 - [ ] 
 - [ ] 
 - [ ] 

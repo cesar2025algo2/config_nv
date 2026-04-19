@@ -94,17 +94,17 @@ return {
 					"buffer",
 					"emoji",
 					"sql",
-					--"copilot"
+					"copilot",
 				},
 				providers = {
-					-- -- 2. Agregamos el provider de Copilot usando blink.compat
-					-- copilot = {
-					-- 	name = "copilot",
-					-- 	module = "blink.compat.source",
-					-- 	score_offset = 100, -- Le damos prioridad alta para que aparezca arriba
-					-- 	async = true,
-					-- 	opts = {},
-					-- },
+					-- 2. Agregamos el provider de Copilot usando blink.compat
+					copilot = {
+						name = "copilot",
+						module = "blink.compat.source",
+						score_offset = 100, -- Le damos prioridad alta para que aparezca arriba
+						async = true,
+						opts = {},
+					},
 					emoji = {
 						module = "blink-emoji",
 						name = "Emoji",
