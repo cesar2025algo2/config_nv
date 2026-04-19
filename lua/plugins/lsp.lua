@@ -34,31 +34,35 @@ return {
 
 		-- Diagnostic Config
 		-- See :help vim.diagnostic.Opts
+		-- Configuración de Diagnósticos (UI)
+		local signs = {
+			[vim.diagnostic.severity.ERROR] = "󰅚 ",
+			[vim.diagnostic.severity.WARN] = "󰀪 ",
+			[vim.diagnostic.severity.INFO] = "󰋽 ",
+			[vim.diagnostic.severity.HINT] = "󰌶 ",
+		}
+
 		vim.diagnostic.config({
 			severity_sort = true,
 			float = { border = "rounded", source = "if_many" },
 			underline = { severity = vim.diagnostic.severity.ERROR },
 			signs = {
-				text = {
-					[vim.diagnostic.severity.ERROR] = "󰅚 ",
-					[vim.diagnostic.severity.WARN] = "󰀪 ",
-					[vim.diagnostic.severity.INFO] = "󰋽 ",
-				},
+				text = signs,
+				priority = 20, -- Esto asegura que tus iconos tengan prioridad sobre otros plugins
 			},
 			virtual_text = {
 				source = "if_many",
 				spacing = 2,
-				format = function(diagnostic)
-					local diagnostic_message = {
-						[vim.diagnostic.severity.ERROR] = diagnostic.message,
-						[vim.diagnostic.severity.WARN] = diagnostic.message,
-						[vim.diagnostic.severity.INFO] = diagnostic.message,
-						[vim.diagnostic.severity.HINT] = diagnostic.message,
-					}
-					return diagnostic_message[diagnostic.severity]
-				end,
 			},
 		})
+
+		-- Compatibilidad extra para servidores como Pyright
+		for type, icon in pairs(signs) do
+			local name = vim.diagnostic.severity[type]:gsub("^%l", string.upper)
+			name = "DiagnosticSign" .. name
+			vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+		end
+
 		--
 		-- LSP provides Neovim with features like:
 		--  - Go to definition
