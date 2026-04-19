@@ -1,11 +1,8 @@
-# Ignorar la carpeta de plugins instalados (Lazy los vuelve a descargar)
-/lazy-lock.json
-/lazy/
-
 # Ignorar archivos temporales de Neovim
 *.swp
 undo/
 /shada/
 
-# Si usas Mason para instalar LSPs/Formatters
+# Ignorar las descargas pesadas. Si usas Mason para instalar LSPs/Formatters
+/lazy/
 /mason/
