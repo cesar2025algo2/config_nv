@@ -16,6 +16,7 @@ return {
 			"rafamadriz/friendly-snippets",
 			"moyiz/blink-emoji.nvim",
 			"ray-x/cmp-sql",
+			"giuxtaposition/blink-cmp-copilot",
 		},
 
 		-- use a release tag to download pre-built binaries
@@ -100,7 +101,8 @@ return {
 					-- 2. Agregamos el provider de Copilot usando blink.compat
 					copilot = {
 						name = "copilot",
-						module = "blink.compat.source",
+						-- module = "blink.compat.source",
+						module = "blink-cmp-copilot",
 						score_offset = 100, -- Le damos prioridad alta para que aparezca arriba
 						async = true,
 						opts = {},

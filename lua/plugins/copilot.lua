@@ -10,6 +10,7 @@ return {
 			{ "<leader>ce", "<cmd>Copilot enable<CR>", desc = "[c]opilot [e]nable" },
 			{ "<leader>cd", "<cmd>Copilot disable<CR>", desc = "[c]opilot [d]isable" },
 			{ "<leader>cs", "<cmd>Copilot status<CR>", desc = "[c]opilot [s]tatus" },
+			{ "<leader>cp", "<cmd>Copilot panel<CR>", desc = "[c]opilot [p]anel" },
 		},
 		config = function()
 			require("copilot").setup({
@@ -26,7 +27,26 @@ return {
 						dismiss = "<C-]>", -- descartar la sugerencia actual
 					},
 				},
-				panel = { enabled = false },
+				panel = {
+					enabled = false, -- si es true, entonces desconecta el panel de copilot-cmp o del provider en blink-cmp y desconecta el menú de cmp, mostrando las sugerencias en una ventana flotante (más parecido a la experiencia de github copilot). En ese caso puedes descomentar el codigo siguiente.
+					-- auto_refresh = false, -- si querés que se actualice solo mientras escribís (puede consumir más)
+					-- layout = {
+					-- 	position = "bottom", -- "bottom", "right", "top", "left"
+					-- 	ratio = 0.4, -- tamaño relativo de la ventana (40%)
+					-- },
+					-- keymap = {
+					-- 	accept = "<CR>", -- aceptar la sugerencia donde esté el cursor (en lugar de la primera)
+					-- 	jump_prev = "[[",
+					-- 	jump_next = "]]",
+					-- 	refresh = "gr",
+					-- 	open = "<M-CR>", -- Alt + Enter
+					-- 	. Comandos principales
+					-- Una vez habilitado, puedes interactuar con él mediante comandos de Neovim:
+					-- :Copilot panel: Abre la ventana con las sugerencias.
+					-- En la ventana del panel:
+					-- q: Cierra el panel.
+					-- r: Refresca las sugerencias (útil si cambiaste el código y quieres ver opciones nuevas).
+				},
 				server_opts_override = { trace = "off" }, -- Esto ayuda un poco con el consumo de recursos en CPUs modestas
 				-- Si quieres limitar a ciertos filetypes, descomenta este bloque y ajusta a tu gusto. De lo contrario, se activará en TODO (lo cual puede ser pesado en archivos grandes o con sintaxis compleja). gitcopilot detecta tu workspace y no se activa en repositorios sin código, y parece que esta activo en todos los archivos del workspace, incluso los que no son de código, pero no consume recursos en archivos sin código, así que no es un gran problema. De todas formas, si quieres limitarlo a ciertos filetypes, puedes hacerlo aquí.
 				-- filetypes = {
@@ -45,34 +65,14 @@ return {
 				-- 	["."] = false, -- No activar en archivos sin extensión (evita carga innecesaria)
 				-- },
 			})
-		end,
-	},
-	{
-		"zbirenbaum/copilot-cmp", -- Complemento para integrar Copilot con nvim-cmp
-		-- MAGIA: Solo se carga después de que copilot.lua se haya cargado
-		-- pero no tiene disparadores propios (ni cmd ni event)
-		lazy = true, -- No se carga automáticamente, solo cuando se le indique
-		dependencies = { "zbirenbaum/copilot.lua" }, -- Asegura que se cargue después de copilot.lua
-		config = function()
-			require("copilot_cmp").setup() -- Configuración mínima, puedes personalizarla como quieras
-		end,
-		-- Este bloque asegura que se inicialice apenas el plugin base esté listo
-		init = function()
-			vim.api.nvim_create_autocmd("User", { -- Evento: User (Un evento personalizado, no del sistema).
-				pattern = "LazyLoad", -- Patrón: LazyLoad (Se dispara cuando Lazy termina de cargar un plugin).
-				callback = function(event)
-					if event.data == "copilot.lua" then -- si el evento que se acaba de cargar es `copilot.lua`, entonces
-						require("lazy").load({ plugins = { "copilot-cmp" } }) -- carga también el plugin `copilot-cmp`
-					end
-				end,
-			})
+
+			-- En caso de que se cargue el plugin y se habilite Copilot desde que se abre el archivo, este codigo desactiva usando la API interna. De este modo, no aumenta 1G de ram!
+			local ok, command = pcall(require, "copilot.command")
+			if ok then
+				command.disable()
+			else
+				vim.cmd("Copilot disable")
+			end
 		end,
 	},
 }
--- 		-- En caso de que se cargue el plugin y se habilite Copilot desde que se abre el archivo, este codigo desactiva usando la API interna. De este modo, no aumenta 1G de ram!
--- 		local ok, command = pcall(require, "copilot.command")
--- 		if ok then
--- 			command.disable()
--- 		else
--- 			vim.cmd("Copilot disable")
--- 		end
