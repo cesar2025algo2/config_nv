@@ -1,5 +1,5 @@
 ```text
-nvim
+~/.config/nvim
 ├── Readme.md
 ├── init.lua
 ├── lazy-lock.json
@@ -19,7 +19,9 @@ nvim
         ├── dap.lua
         ├── dressing.lua
         ├── fzf-lua.lua
+        ├── live-preview.lua
         ├── lsp.lua
+        ├── markdown-preview.lua
         ├── nvim-treesitter-textobjects.lua
         ├── nvim-treesitter.lua
         ├── oil.lua
@@ -29,7 +31,7 @@ nvim
         ├── tokyonight.lua
         └── which-key.lua
 
-4 directories, 25 files
+4 directories, 27 files
 ```
 
 - [X] lazy.lua
@@ -55,6 +57,6 @@ nvim
 - [X] blink-cmp.lua 
 - [X] copilot.lua
 - [X] copilot-chat.lua
-- [ ] 
-- [ ] 
+- [X] markdown-preview
+- [X] live-preview
 - [ ] 
