@@ -1,3 +1,6 @@
+
+My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2/dotfiles) repository on [github](https://github.com/cesar2025algo2).
+
 ```text
 ~/.config/nvim
 ├── Readme.md
@@ -26,37 +29,39 @@
         ├── nvim-treesitter.lua
         ├── oil.lua
         ├── project.lua
+        ├── render-markdown.lua
         ├── sleuth-nvim.lua
         ├── statusline.lua
         ├── tokyonight.lua
         └── which-key.lua
 
-4 directories, 27 files
+4 directories, 28 files
 ```
 
 - [X] lazy.lua
 - [X] options.lua
-- [X] tokyonight.lua
+- [X] tokyonight
 - [X] init.lua
-- [X] statusline.lua
-- [X] oil.lua
-- [X] fzf-lua.lua
-- [X] which-key.lua
-- [X] sleuth-nvim.lua
-- [X] dressing.lua
+- [X] statusline
+- [X] oil
+- [X] fzf-lua
+- [X] which-key
+- [X] sleuth-nvim
+- [X] dressing
 - [X] project.lua
 - [X] ui.lua
 - [X] utils.lua
 - [X] autocmds.lua
 - [X] keymaps.lua
-- [X] nvim-treesitter.lua 
-- [x] nvim-treesitter-textobjects.lua
-- [x] lsp.lua
-- [X] conform.lua
-- [X] dap.lua
-- [X] blink-cmp.lua 
-- [X] copilot.lua
-- [X] copilot-chat.lua
+- [X] nvim-treesitter 
+- [x] nvim-treesitter-textobjects
+- [x] lsp
+- [x] masson
+- [X] conform
+- [X] dap
+- [X] blink-cmp 
+- [X] copilot
+- [X] copilot-chat
 - [X] markdown-preview
 - [X] live-preview
-- [ ] 
+- [X] render-markdown
