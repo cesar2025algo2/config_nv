@@ -33,9 +33,10 @@ My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2
         ├── sleuth-nvim.lua
         ├── statusline.lua
         ├── tokyonight.lua
+        ├── table-mode.lua
         └── which-key.lua
 
-4 directories, 28 files
+4 directories, 29 files
 ```
 
 - [X] lazy.lua
@@ -65,3 +66,4 @@ My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2
 - [X] markdown-preview
 - [X] live-preview
 - [X] render-markdown
+- [x] table-mode
