@@ -25,6 +25,7 @@ My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2
         ├── live-preview.lua
         ├── lsp.lua
         ├── markdown-preview.lua
+        ├── multicursor.lua
         ├── nvim-treesitter-textobjects.lua
         ├── nvim-treesitter.lua
         ├── oil.lua
@@ -36,7 +37,7 @@ My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2
         ├── table-mode.lua
         └── which-key.lua
 
-4 directories, 29 files
+4 directories, 30 files
 ```
 
 - [X] lazy.lua
@@ -67,3 +68,4 @@ My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2
 - [X] live-preview
 - [X] render-markdown
 - [x] table-mode
+- [X] multicursor
