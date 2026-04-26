@@ -49,21 +49,21 @@ return {
 				},
 				server_opts_override = { trace = "off" }, -- Esto ayuda un poco con el consumo de recursos en CPUs modestas
 				-- Si quieres limitar a ciertos filetypes, descomenta este bloque y ajusta a tu gusto. De lo contrario, se activará en TODO (lo cual puede ser pesado en archivos grandes o con sintaxis compleja). gitcopilot detecta tu workspace y no se activa en repositorios sin código, y parece que esta activo en todos los archivos del workspace, incluso los que no son de código, pero no consume recursos en archivos sin código, así que no es un gran problema. De todas formas, si quieres limitarlo a ciertos filetypes, puedes hacerlo aquí.
-				-- filetypes = {
-				-- 	["*"] = false, -- Desactiva TODO por defecto
-				-- 	python = true, -- Solo permite en lo que vos quieras
-				-- 	lua = true,
-				-- 	c = true,
-				-- 	markdown = true,
-				-- 	latex = true, -- Si usas archivos .tex directamente, activalo aquí
-				-- 	tex = true, -- (A veces el filetype es 'tex' en lugar de 'latex')
-				-- 	help = false, -- No sugerir en manuales de ayuda
-				-- 	gitcommit = true, -- Opcional: a veces es mejor escribir tus propios mensajes de commit
-				-- 	gitrebase = false,
-				-- 	hgcommit = false,
-				-- 	cvs = false,
-				-- 	["."] = false, -- No activar en archivos sin extensión (evita carga innecesaria)
-				-- },
+				filetypes = {
+					["*"] = false, -- Desactiva TODO por defecto
+					python = true, -- Solo permite en lo que vos quieras
+					lua = true,
+					c = true,
+					markdown = true,
+					latex = true, -- Si usas archivos .tex directamente, activalo aquí
+					tex = true, -- (A veces el filetype es 'tex' en lugar de 'latex')
+					help = false, -- No sugerir en manuales de ayuda
+					gitcommit = true, -- Opcional: a veces es mejor escribir tus propios mensajes de commit
+					gitrebase = false,
+					hgcommit = false,
+					cvs = false,
+					["."] = false, -- No activar en archivos sin extensión (evita carga innecesaria)
+				},
 			})
 
 			-- En caso de que se cargue el plugin y se habilite Copilot desde que se abre el archivo, este codigo desactiva usando la API interna. De este modo, no aumenta 1G de ram!
