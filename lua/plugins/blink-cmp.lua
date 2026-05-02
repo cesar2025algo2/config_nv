@@ -14,50 +14,42 @@ return {
 		-- optional: provides snippets for the snippet source
 		dependencies = {
 			"rafamadriz/friendly-snippets",
+			"L3MON4D3/LuaSnip",
 			"moyiz/blink-emoji.nvim",
 			"ray-x/cmp-sql",
 			"giuxtaposition/blink-cmp-copilot",
 		},
 
+		config = function(_, opts)
+			-- 1. Cargar snippets de VSCode (friendly-snippets)
+			require("luasnip.loaders.from_vscode").lazy_load()
+
+			-- 2. Cargar tus snippets de la carpeta custom (~/.config/nvim/lua/snippets/)
+			require("luasnip.loaders.from_lua").lazy_load({
+				paths = { vim.fn.stdpath("config") .. "/lua/snippets/" },
+			})
+
+			require("blink.cmp").setup(opts)
+		end,
+
 		-- use a release tag to download pre-built binaries
 		version = "1.*",
-		-- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-		-- build = 'cargo build --release',
-		-- If you use nix, you can build from source using latest nightly rust with:
-		-- build = 'nix run .#build-plugin',
-
 		---@module 'blink.cmp'
 		---@type blink.cmp.Config
 		opts = {
 			-- 1. Especificamos que use el motor nativo de Neovim
 			snippets = {
-				preset = "default", -- Esto usa vim.snippet de Neovim 0.10/0.11
+				preset = "luasnip", -- Esto usa vim.snippet de Neovim 0.10/0.11
 			},
-
-			-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
-			-- 'super-tab' for mappings similar to vscode (tab to accept)
-			-- 'enter' for enter to accept
-			-- 'none' for no mappings
-			--
-			-- All presets have the following mappings:
-			-- C-space: Open menu or open docs if already open
-			-- C-n/C-p or Up/Down: Select next/previous item
-			-- C-e: Hide menu
-			-- C-k: Toggle signature help (if signature.enabled = true)
-			--
-			-- See :h blink-cmp-config-keymap for defining your own keymap
 			keymap = {
 				preset = "default",
 				["<C-Z>"] = { "accept", "fallback" },
 			},
 
 			appearance = {
-				-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-				-- Adjusts spacing to ensure icons are aligned
 				nerd_font_variant = "mono",
 			},
 
-			-- (Default) Only show the documentation popup when manually triggered
 			completion = {
 				menu = {
 					draw = {
@@ -66,16 +58,13 @@ return {
 							{ "kind" }, -- Tipo (Class, Function, etc)
 						},
 					},
-					-- Esto añade el borde a la ventana de sugerencias
 					border = "rounded", -- Opciones: 'single', 'double', 'rounded', 'solid', 'shadow'
 
-					-- Opcional: Si quieres que el borde tenga un color específico
 					winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
 				},
 				documentation = {
 					auto_show = true,
 					window = {
-						-- Esto añade el borde a la ventana de documentación (la que sale al costado)
 						border = "rounded",
 					},
 				},
@@ -85,8 +74,6 @@ return {
 				window = { border = "rounded" }, -- pone borde redondeados a signature
 			},
 
-			-- Default list of enabled providers defined so that you can extend it
-			-- elsewhere in your config, without redefining it, due to `opts_extend`
 			sources = {
 				default = {
 					"lsp",
@@ -128,11 +115,6 @@ return {
 
 						-- all blink.cmp source config options work as normal:
 						score_offset = -3,
-
-						-- this table is passed directly to the proxied completion source
-						-- as the `option` field in nvim-cmp's source config
-						--
-						-- this is NOT the same as the opts in a plugin's lazy.nvim spec
 						opts = {},
 						should_show_items = function()
 							return vim.tbl_contains(
@@ -145,12 +127,6 @@ return {
 					},
 				},
 			},
-
-			-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
-			-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
-			-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
-			--
-			-- See the fuzzy documentation for more information
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 		},
 		opts_extend = { "sources.default" },
