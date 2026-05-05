@@ -2,6 +2,11 @@
 return {
 	{
 		"supermaven-inc/supermaven-nvim",
+		keys = {
+			{ "<leader>md", "<cmd>SupermavenStop<cr>", desc = "Supermaven: Desactivar" },
+			{ "<leader>me", "<cmd>SupermavenStart<cr>", desc = "Supermaven: Activar" },
+			{ "<leader>mt", "<cmd>SupermavenToggle<cr>", desc = "Supermaven: Toggle (On/Off)" },
+		},
 		opts = {
 			keymaps = {
 				accept_suggestion = "<M-l>",
@@ -9,7 +14,6 @@ return {
 				next_suggestion = "<C-j>",
 				previous_suggestion = "<C-k>",
 				select_suggestion = "<CR>",
-				accept_word = "<C-j>",
 			},
 			log_level = "off", -- Ahorra ciclos de CPU del Celeron
 		},
