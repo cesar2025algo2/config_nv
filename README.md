@@ -3,7 +3,7 @@ My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2
 
 ```text
 ~/.config/nvim
-├── Readme.md
+├── README.md
 ├── init.lua
 ├── lazy-lock.json
 └── lua
@@ -14,30 +14,31 @@ My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2
     │   ├── options.lua
     │   ├── ui.lua
     │   └── utils.lua
-    └── plugins
-        ├── blink-cmp.lua
-        ├── conform.lua
-        ├── copilot-chat.lua
-        ├── copilot.lua
-        ├── dap.lua
-        ├── dressing.lua
-        ├── fzf-lua.lua
-        ├── live-preview.lua
-        ├── lsp.lua
-        ├── markdown-preview.lua
-        ├── multicursor.lua
-        ├── nvim-treesitter-textobjects.lua
-        ├── nvim-treesitter.lua
-        ├── oil.lua
-        ├── project.lua
-        ├── render-markdown.lua
-        ├── sleuth-nvim.lua
-        ├── statusline.lua
-        ├── tokyonight.lua
-        ├── table-mode.lua
-        └── which-key.lua
-
-4 directories, 30 files
+    ├── plugins
+    │   ├── blink-cmp.lua
+    │   ├── conform.lua
+    │   ├── copilot-chat.lua
+    │   ├── copilot.lua
+    │   ├── dap.lua
+    │   ├── dressing.lua
+    │   ├── fzf-lua.lua
+    │   ├── gemini.lua
+    │   ├── live-preview.lua
+    │   ├── lsp.lua
+    │   ├── markdown-preview.lua
+    │   ├── multicursor.lua
+    │   ├── nvim-treesitter-textobjects.lua
+    │   ├── nvim-treesitter.lua
+    │   ├── oil.lua
+    │   ├── project.lua
+    │   ├── render-markdown.lua
+    │   ├── sleuth-nvim.lua
+    │   ├── statusline.lua
+    │   ├── table-mode.lua
+    │   ├── tokyonight.lua
+    │   └── which-key.lua
+    └── snippets
+        └── tex.lua
 ```
 
 - [X] lazy.lua
@@ -69,3 +70,5 @@ My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2
 - [X] render-markdown
 - [x] table-mode
 - [X] multicursor
+- [X] snippets-tex
+- [X] supermarven
