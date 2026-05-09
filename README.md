@@ -16,6 +16,7 @@ My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2
     │   └── utils.lua
     ├── plugins
     │   ├── blink-cmp.lua
+    │   ├── codeium.lua
     │   ├── conform.lua
     │   ├── copilot-chat.lua
     │   ├── copilot.lua
@@ -72,3 +73,4 @@ My complete shell environment in my [dotfiles](https://github.com/cesar2025algo2
 - [X] multicursor
 - [X] snippets-tex
 - [X] supermarven
+- [X] codeium
