@@ -123,5 +123,102 @@ function M.pandoc_pdf_preview()
 	})
 end
 
-return M
+-- funcion que genera wikilinks (util para hacer indices de wikilinks)
+-- genera indice de wikilinks con anclas `#`
+function M.generate_wikilink_toc()
+	local bufnr = vim.api.nvim_get_current_buf()
+	local ok, parser = pcall(vim.treesitter.get_parser, bufnr, "markdown")
+	if not ok then
+		return
+	end
 
+	local tree = parser:parse()[1]
+	local root = tree:root()
+
+	local query = vim.treesitter.query.parse(
+		"markdown",
+		[[
+        (atx_heading) @heading
+    ]]
+	)
+
+	local toc = { "# Índice", "" }
+	local has_headings = false
+
+	for _, node, _ in query:iter_captures(root, bufnr) do
+		local text = vim.treesitter.get_node_text(node, bufnr)
+
+		-- Capturamos el nivel y el texto
+		local symbols, title = text:match("^(#+)%s*(.-)%s*$") -- (.-) captura mínima para limpiar espacios finales
+
+		if title and title ~= "" then
+			has_headings = true
+			local level = #symbols
+
+			-- Ignoramos el H1 si es el título principal (opcional, si quieres incluirlo borra el 'if level > 1')
+			if level > 0 then
+				local indent = string.rep("  ", level - 1)
+				-- Formato [[#Título]] para que sea un ancla interna
+				table.insert(toc, indent .. "- [[#" .. title .. "]]")
+			end
+		end
+	end
+
+	if has_headings then
+		vim.api.nvim_buf_set_lines(bufnr, 0, 0, false, toc)
+		vim.api.nvim_buf_set_lines(bufnr, #toc, #toc, false, { "" })
+		print("Índice de Wikilinks generado con anclas (#).")
+	end
+end
+
+-- -- genera indice de wikilinks sin anclas `#`
+-- function M.generate_wikilink_toc()
+-- 	local bufnr = vim.api.nvim_get_current_buf()
+-- 	-- Intentamos obtener el parser de markdown
+-- 	local ok, parser = pcall(vim.treesitter.get_parser, bufnr, "markdown")
+-- 	if not ok then
+-- 		print("Treesitter para Markdown no instalado")
+-- 		return
+-- 	end
+--
+-- 	local tree = parser:parse()[1]
+-- 	local root = tree:root()
+--
+-- 	-- Usamos una query más genérica que capture todo el encabezado
+-- 	local query = vim.treesitter.query.parse(
+-- 		"markdown",
+-- 		[[
+--         (atx_heading) @heading
+--     ]]
+-- 	)
+--
+-- 	local toc = { "# Índice", "" }
+-- 	local has_headings = false
+--
+-- 	for _, node, _ in query:iter_captures(root, bufnr) do
+-- 		local text = vim.treesitter.get_node_text(node, bufnr)
+--
+-- 		-- Extraemos el nivel (cuántos # hay)
+-- 		local symbols, title = text:match("^(#+)%s*(.*)")
+--
+-- 		if title then
+-- 			has_headings = true
+-- 			local level = #symbols
+-- 			-- Opcional: Indentación según el nivel (H1 -> sin indentar, H2 -> 2 espacios, etc.)
+-- 			local indent = string.rep("  ", level - 1)
+-- 			table.insert(toc, indent .. "- [[" .. title .. "]]")
+-- 		end
+-- 	end
+--
+-- 	if has_headings then
+-- 		-- Inserta el índice al principio del archivo
+-- 		vim.api.nvim_buf_set_lines(bufnr, 0, 0, false, toc)
+-- 		-- Añadir una línea en blanco extra al final del índice
+-- 		vim.api.nvim_buf_set_lines(bufnr, #toc, #toc, false, { "" })
+-- 		print("Índice de Wikilinks generado.")
+-- 	else
+-- 		print("No se encontraron encabezados.")
+-- 	end
+-- end
+
+return M
