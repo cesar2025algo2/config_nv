@@ -17,7 +17,7 @@ return {
 			-- 1. Falta el **parser de treesitter para `latex`**.
 			-- 2. Faltan las **dependencias del sistema** para convertir LaTeX a Unicode (`latex2text` o `utftex`).
 		},
-		yaml = { enabled = false },
+		yaml = { enabled = true },
 		file_types = { "markdown", "Avante" }, -- opcional pero explícito
 	},
 }
