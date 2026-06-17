@@ -41,15 +41,85 @@ return {
 			end,
 			desc = "Buscar solo Adjuntos",
 		},
+		-- Buscar TEXTO en todo el Vault (Notas y Proyectos), ignorando carpetas de binarios/adjuntos
 		{
 			"<leader>fi",
 			function()
 				require("fzf-lua").live_grep({
-					rg_opts = "--column --line-number --no-heading --color=always --smart-case --glob '!03_Attachments/*'",
+					prompt = "Live Grep (Vault)> ",
+					rg_opts = "--column --line-number --no-heading --color=always --smart-case "
+						.. "--glob '!03_Attachments/*' "
+						.. "--glob '!04_Templates/*'", -- También ignoramos templates para no duplicar resultados
 				})
 			end,
-			desc = "Buscar texto (Ignorando Adjuntos)",
+			desc = "Buscar texto en el Vault",
 		},
+		-- Buscar notas por TAGS dentro del frontmatter
+		{
+			"<leader>ft",
+			function()
+				require("fzf-lua").grep({
+					cwd = "./01_Notes",
+					prompt = "Valor de Tag> ",
+					search = "^tags:.*", -- busca cualquier tag
+					no_esc = true,
+					glob = "**/*.md",
+					rg_opts = "--smart-case --no-heading --line-number --color=always ", --..
+					-- "--max-lines=40",   -- ajusta según el tamaño de tu frontmatter
+				})
+			end,
+			desc = "Buscar valor de Tag en Frontmatter",
+		},
+		-- {
+		-- 	"<leader>ft",
+		-- 	function()
+		-- 		require("fzf-lua").grep({
+		-- 			cwd = "./01_Notes",
+		-- 			prompt = "Filtrar Tag> ",
+		-- 			search = "^tags:",
+		-- 			no_esc = true,
+		-- 			rg_opts = "--smart-case --no-heading --line-number --color=always",
+		-- 			glob = "**/*.md",
+		-- 		})
+		-- 	end,
+		-- 	-- function()
+		-- 	-- 	require("fzf-lua").grep({
+		-- 	-- 		cwd = "./01_Notes",
+		-- 	-- 		prompt = "Filtrar Tag> ",
+		-- 	-- 		search = "^tags:", -- Patrón fijo que busca ripgrep al inicio
+		-- 	-- 		no_esc = true,
+		-- 	-- 	})
+		-- 	-- end,
+		-- 	desc = "Buscar por Tags",
+		-- },
+		-- Buscar notas por ALIAS dentro del frontmatter
+		{
+			"<leader>fl",
+			function()
+				require("fzf-lua").grep({
+					cwd = "./01_Notes",
+					prompt = "Alias en Frontmatter> ",
+					search = "^aliases:",
+					no_esc = true,
+					glob = "**/*.md",
+					rg_opts = "--smart-case --no-heading --line-number --color=always ", --..
+					-- "--max-count=1 --max-lines=30",
+				})
+			end,
+			desc = "[f]ind a[l]ias en Frontmatter",
+		},
+		-- {
+		-- 	"<leader>fl",
+		-- 	function()
+		-- 		require("fzf-lua").grep({
+		-- 			cwd = "./01_Notes",
+		-- 			prompt = "Filtrar Alias> ",
+		-- 			search = "^aliases:", -- Patrón fijo que busca ripgrep al inicio
+		-- 			no_esc = true,
+		-- 		})
+		-- 	end,
+		-- 	desc = "[f]ind a[l]ias",
+		-- },
 		{
 			"<leader>fc",
 			function()
