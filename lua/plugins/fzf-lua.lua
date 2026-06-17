@@ -22,6 +22,35 @@ return {
 			desc = "[f]ind by [g]repping in project directory",
 		},
 		{
+			"<leader>fn",
+			function()
+				require("fzf-lua").live_grep({
+					cwd = "./01_Notes",
+					prompt = "Notes Text> ",
+				})
+			end,
+			desc = "Buscar texto en 01_Notes",
+		},
+		{
+			"<leader>fa",
+			function()
+				require("fzf-lua").files({
+					cwd = "./03_Attachments",
+					prompt = "Attachments>",
+				})
+			end,
+			desc = "Buscar solo Adjuntos",
+		},
+		{
+			"<leader>fi",
+			function()
+				require("fzf-lua").live_grep({
+					rg_opts = "--column --line-number --no-heading --color=always --smart-case --glob '!03_Attachments/*'",
+				})
+			end,
+			desc = "Buscar texto (Ignorando Adjuntos)",
+		},
+		{
 			"<leader>fc",
 			function()
 				require("fzf-lua").files({ cwd = vim.fn.stdpath("config") })
