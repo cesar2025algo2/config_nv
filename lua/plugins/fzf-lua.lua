@@ -107,7 +107,7 @@ return {
 		},
 		-- los siguientes son para usar en el vault
 		{
-			"<leader>fn",
+			"<leader>fvt",
 			function()
 				require("fzf-lua").live_grep({
 					cwd = "./01_Notes",
@@ -117,7 +117,7 @@ return {
 			desc = "Buscar texto en 01_Notes",
 		},
 		{
-			"<leader>fa",
+			"<leader>fva",
 			function()
 				require("fzf-lua").files({
 					cwd = "./03_Attachments",
@@ -126,9 +126,19 @@ return {
 			end,
 			desc = "Buscar solo Adjuntos",
 		},
+		{
+			"<leader>fvn",
+			function()
+				require("fzf-lua").files({
+					cwd = "./01_Notes",
+					prompt = "Notes>",
+				})
+			end,
+			desc = "Buscar files solo en Notes",
+		},
 		-- Buscar TEXTO en todo el Vault (Notas y Proyectos), ignorando carpetas de binarios/adjuntos
 		{
-			"<leader>fi",
+			"<leader>fvi",
 			function()
 				require("fzf-lua").live_grep({
 					prompt = "Live Grep (Vault)> ",
@@ -141,7 +151,7 @@ return {
 		},
 		-- Buscar notas por TAGS dentro del frontmatter
 		{
-			"<leader>ft",
+			"<leader>fvt",
 			function()
 				require("fzf-lua").grep({
 					cwd = "./01_Notes",
@@ -157,7 +167,7 @@ return {
 		},
 		-- Buscar notas por ALIAS dentro del frontmatter
 		{
-			"<leader>fl",
+			"<leader>fvl",
 			function()
 				require("fzf-lua").grep({
 					cwd = "./01_Notes",
@@ -173,7 +183,7 @@ return {
 		},
 		-- Busca solo en headers
 		{
-			"<leader>fe", -- por ejemplo: find headings
+			"<leader>fve", -- por ejemplo: find headings
 			function()
 				require("fzf-lua").grep({
 					cwd = "./01_Notes",
