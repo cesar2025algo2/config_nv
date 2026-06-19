@@ -32,3 +32,8 @@ vim.keymap.set("n", "<leader>p", utils.pandoc_pdf_preview, { desc = "Pandoc PDF 
 vim.keymap.set("n", "<leader>wl", function()
 	utils.generate_wikilink_toc()
 end, { desc = "Generar TOC de Wikilinks" })
+
+-- Crear una nota nueva automáticamente en 00_Inbox con Frontmatter
+vim.keymap.set("n", "<leader>nn", function()
+	utils.new_note()
+end, { desc = "New Note en 00_Inbox" })

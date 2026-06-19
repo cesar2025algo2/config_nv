@@ -221,4 +221,50 @@ end
 -- 	end
 -- end
 
+-- Crear una nota nueva automáticamente en 00_Inbox con Frontmatter
+function M.new_note()
+	-- 1. Pedir el título de la nota al usuario
+	local titulo = vim.fn.input("Nombre de la nueva nota: ")
+	if titulo == "" then
+		print("\nCreación cancelada.")
+		return
+	end
+
+	-- 2. Sanitizar el nombre del archivo (reemplazar espacios por guiones y pasar a minúsculas)
+	local nombre_archivo = titulo:gsub("%s+", "-"):lower() .. ".md"
+	local ruta_completa = "00_Inbox/" .. nombre_archivo
+
+	-- 3 Validación de existencia ---
+	-- 'vim.uv.fs_stat' chequea los metadatos del archivo. Si no devuelve nil, el archivo existe.
+	local fs = vim.uv or vim.loop
+	if fs.fs_stat(ruta_completa) then
+		print("\n⚠️ ¡Error! Ya existe una nota con ese nombre en 00_Inbox.")
+		return
+	end
+	-- 4. Generar el ID único basado en el tiempo actual (Ej: 202606191305)
+	local id_timestamp = os.date("%Y%m%d%H%M")
+
+	-- 5. Definir la pl:w
+	-- antilla del Frontmatter
+	local template = {
+		"---",
+		"id: " .. id_timestamp,
+		"aliases: []",
+		"tags: []",
+		"---",
+		"# " .. titulo,
+		"",
+		"",
+	}
+
+	-- 6. Abrir el archivo en un buffer de Neovim
+	vim.cmd("edit " .. ruta_completa)
+
+	-- 7. Inyectar el template de forma segura
+	vim.api.nvim_buf_set_lines(0, 0, -1, false, template)
+
+	-- Mover el cursor al final del archivo para empezar a escribir derecho viejo
+	vim.api.nvim_win_set_cursor(0, { #template, 0 })
+end
+
 return M
