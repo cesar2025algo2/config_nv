@@ -230,22 +230,28 @@ function M.new_note()
 		return
 	end
 
-	-- 2. Sanitizar el nombre del archivo (reemplazar espacios por guiones y pasar a minúsculas)
+	-- 2. Sanitizar el nombre del archivo
 	local nombre_archivo = titulo:gsub("%s+", "-"):lower() .. ".md"
-	local ruta_completa = "00_Inbox/" .. nombre_archivo
 
-	-- 3 Validación de existencia ---
-	-- 'vim.uv.fs_stat' chequea los metadatos del archivo. Si no devuelve nil, el archivo existe.
+	-- --- VALIDACIÓN COMPACTA EN MÚLTIPLES CARPETAS ---
+	-- Agrupamos las carpetas donde queremos buscar que no se repita
+	local carpetas_vault = { "00_Inbox/", "01_Notes/", "02_Projects/" }
 	local fs = vim.uv or vim.loop
-	if fs.fs_stat(ruta_completa) then
-		print("\n⚠️ ¡Error! Ya existe una nota con ese nombre en 00_Inbox.")
-		return
+
+	for _, carpeta in ipairs(carpetas_vault) do
+		local ruta_chequeo = carpeta .. nombre_archivo
+		if fs.fs_stat(ruta_chequeo) then
+			-- Usamos string.format para que el mensaje te diga la carpeta exacta dinámicamente
+			print(string.format("\n⚠️ ¡Error! Ya existe una nota con ese nombre en %s", carpeta))
+			return
+		end
 	end
-	-- 4. Generar el ID único basado en el tiempo actual (Ej: 202606191305)
+
+	local ruta_completa = "00_Inbox/" .. nombre_archivo
+	-- 3. Generar el ID único basado en el tiempo actual (Ej: 202606191305)
 	local id_timestamp = os.date("%Y%m%d%H%M")
 
-	-- 5. Definir la pl:w
-	-- antilla del Frontmatter
+	-- 4. Definir la plantilla del Frontmatter
 	local template = {
 		"---",
 		"id: " .. id_timestamp,
